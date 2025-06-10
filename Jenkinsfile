@@ -1,8 +1,8 @@
 pipeline {
     agent { label 'AGENT-1' }
     environment {
-        PROJECT = 'EXPENSE'
-        COMPONENT = 'BACKEND'
+        PROJECT = 'expense'
+        COMPONENT = 'backend'
         appVersion = ''
     }
     options {
@@ -24,6 +24,15 @@ pipeline {
                  def packageJson = readJSON file: 'package.json'
                  appVersion = packageJson.version
                  echo "Version is: $appVersion"
+                }
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                script{
+                 sh """
+                   npm install
+                 """
                 }
             }
         }
